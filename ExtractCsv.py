@@ -5,7 +5,7 @@ from sqlalchemy import *
 from sqlalchemy.orm import relationship
 
 from dblogin import *
-from databaseTools import dbtools 
+import dbtools 
 
 import tkp.db
 from tkp.db.model import Varmetric
