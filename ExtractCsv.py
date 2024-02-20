@@ -15,7 +15,6 @@ from tkp.db.model import Extractedsource
 from tkp.db.model import Assocxtrsource
 from tkp.db.model import Image
 
-outputname = 'GRBdata' #Name for the output .csv file
 database = 'AR_testing6' 
 dataset_id = 330
 
