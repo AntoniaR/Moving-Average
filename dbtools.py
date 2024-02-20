@@ -31,7 +31,6 @@ def GetVarParams(session,dataset_id):
 def GetAllLightcurves(session,dataset_id):
     # Returns all the light curves for the unique sources in a given dataset
     
-    full_datasets = dump_trans_full_dataset(DATASET_NR, SIGMA)
     full_dataset_query = """
     SELECT assocxtrsource.runcat, runningcatalog.datapoints
     FROM extractedsource
@@ -41,10 +40,8 @@ def GetAllLightcurves(session,dataset_id):
     ON extractedsource.id = assocxtrsource.xtrsrc
     INNER JOIN runningcatalog
     ON extractedsource.id = runningcatalog.xtrsrc
-    WHERE extractedsource.det_sigma>{}
-    AND image.dataset={}
-    AND runningcatalog.datapoints={}
-    """.format(sigma, dataset_nr, datapoints)
+    WHERE image.dataset={}
+    """.format(dataset_id)
     
     cursor = tkp.db.execute(full_dataset_query)
     transients = tkp.db.generic.get_db_rows_as_dicts(cursor)
