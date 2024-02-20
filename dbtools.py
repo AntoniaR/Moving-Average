@@ -34,25 +34,9 @@ def GetAllLightcurves(session,dataset_id):
     x = session.query(Runningcatalog).filter(Runningcatalog.dataset_id == dataset_id)
     dx = pd.read_sql_query(x.statement,db.connection)
     dx = dx.rename(index=str,columns={'id' : 'runcat'})
-
-    #for src in dx.runcat:
-    #print(src)
     y = session.query(Extractedsource,Assocxtrsource).select_from(join(Extractedsource,Assocxtrsource)).filter(Assocxtrsource.runcat_id.in_(dx.runcat)).all()
-    #print(y)
     data = [[y[i].Extractedsource.id, y[i].Assocxtrsource.runcat_id, y[i].Extractedsource.image.taustart_ts, y[i].Extractedsource.f_int, y[i].Extractedsource.f_int_err] for i in range(len(y))]
-    #print(data)
     data=pd.DataFrame(data=data, columns =['srcID','runcat','time','flux','fluxErr'])
     data=data.sort_values(['runcat','time'])
-    print(data)
 
-#plotdata = [[VarParams[i].Runningcatalog.id, VarParams[i].Varmetric.eta_int, VarParams[i].Varmetric.v_int, VarParams[i].Varmetric.lightcurve_max, VarParams[i].Varmetric.lightcurve_median, (VarParams[i].Varmetric.band.freq_central/1e6), VarParams[i].Runningcatalog.datapoints, VarParams[i].Varmetric.newsource] for i in range(len(VarParams)) if VarParams[i].Runningcatalog.id not in matchSrcs]
-#plotdata = pd.DataFrame(data=plotdata,columns=['runcat','eta','V','maxFlx','avgFlx','freq','dpts','newSrc'])
-#plotdata = plotdata.fillna('N')
-
-
-
-
-        
-#        dy = pd.read_sql_query(y.statement,db.connection)
-#        print(dy)
-    #exit()
+    return(data)
