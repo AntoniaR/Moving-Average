@@ -24,4 +24,4 @@ global db
 # Connect to the database and run the queries
 session = dbtools.access(engine,host,port,user,password,database)
 lightcurves = dbtools.GetAllLightcurves(session,dataset_id)  # get all the lightcurves
-print(lightcurves)
+lightcurves.to_csv('ds'+str(dataset_id)+'_lightcurves.csv', index=False)
